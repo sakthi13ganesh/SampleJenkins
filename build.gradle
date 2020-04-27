@@ -1,0 +1,37 @@
+import sun.awt.WindowClosingListener
+
+plugins {
+    id 'java'
+}
+
+group 'com.thought'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.junit.jupiter:junit-jupiter-api:5.5.0"
+    testCompile group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.4.0'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.0"
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.5.0')
+}
+
+test{
+    useJUnitPlatform()
+}
+
+task testRegressions(type: Test){
+    useJUnitPlatform(){
+        includeTags('regression')
+    }
+}
+
+task testBulk(type: Test){
+    useJUnitPlatform(){
+        includeTags('bulk')
+    }
+}
