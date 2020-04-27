@@ -24,14 +24,22 @@ test{
     useJUnitPlatform()
 }
 
-task testRegressions(type: Test){
+task testOnStage(type: Test){
     useJUnitPlatform(){
-        includeTags('regression')
+        includeTags(suiteNature)
     }
+    systemProperties = [
+            'currentEnv' : 'stage'
+    ]
 }
 
-task testBulk(type: Test){
+task testOnQa(type: Test){
     useJUnitPlatform(){
-        includeTags('bulk')
+        includeTags(suiteNature)
     }
+    systemProperties = [
+            'currentEnv' : 'qa'
+    ]
 }
+
+
