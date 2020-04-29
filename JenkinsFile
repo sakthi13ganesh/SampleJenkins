@@ -58,9 +58,9 @@ pipeline {
         stage ('Param Validation') {
             steps {
                 script{
-                    echo "Env Choice   : ${choiceParam.Env}"
-                    echo "Suite Choice : ${choiceParam.Suite}"
-                    if (choiceParam.Env.equals("Env not recognized") || choiceParam.Suite.equals("Suite not recognized")) {
+                    echo "Env Choice   : ${Env}"
+                    echo "Suite Choice : ${Suite}"
+                    if (Env.equals("Env not recognized") || Suite.equals("Suite not recognized")) {
                       echo "Validation Failure"
                       currentBuild.result = 'ABORTED'
                       return
@@ -73,8 +73,8 @@ pipeline {
         stage ('Running Test suite') {
             steps {
                 script{
-                    task = ${choiceParam.Env}=="QA"?"testOnQa":"testOnStage"
-                    sh "./gradlew clean ${task} -PsuiteNature=${choiceParam.Suite}"
+                    task = ${Env}=="QA"?"testOnQa":"testOnStage"
+                    sh "./gradlew clean ${task} -PsuiteNature=${Suite}"
                 }
             }
         }
