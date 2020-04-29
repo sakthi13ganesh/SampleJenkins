@@ -21,7 +21,7 @@ properties([
                     classpath: [],
                     sandbox: false,
                     script:
-                        'return["QA","Stage"]'
+                        'return['QA','Stage']'
                 ]
             ]
         ],
@@ -44,7 +44,7 @@ properties([
                     classpath: [],
                     sandbox: false,
                     script:
-                        'return["regression","smoke"]'
+                        'return['regression','smoke']'
                 ]
             ]
         ]
