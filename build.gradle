@@ -29,6 +29,8 @@ task testOnStage(type: Test){
         includeTags(suiteNature)
     }
     systemProperties = [
+            'junit.jupiter.extensions.autodetection.enabled': 'true',
+            'junit.jupiter.testinstance.lifecycle.default': 'per_class',
             'currentEnv' : 'stage'
     ]
 }
@@ -38,6 +40,8 @@ task testOnQa(type: Test){
         includeTags(suiteNature)
     }
     systemProperties = [
+            'junit.jupiter.extensions.autodetection.enabled': 'true',
+            'junit.jupiter.testinstance.lifecycle.default': 'per_class',
             'currentEnv' : 'qa'
     ]
 }
