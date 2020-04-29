@@ -1,0 +1,92 @@
+properties([
+    parameters([
+        [$class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Select the Env Name from the Dropdown List',
+            filterLength: 1,
+            filterable: true,
+            name: 'Env',
+            randomName: 'choice-parameter-5631314439613978',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        'return[\'Env not recognized\']'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        'return["QA","Stage"]'
+                ]
+            ]
+        ],
+        [$class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Select the Suite to test from the Dropdown List',
+            filterLength: 1,
+            filterable: true,
+            name: 'Suite',
+            randomName: 'choice-parameter-5631314456178619',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        'return[\'Suite not recognized\']'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        'return["regression","smoke"]'
+                ]
+            ]
+        ]
+    ])
+])
+
+pipeline {
+    environment {
+
+    }
+
+    agent any
+
+    stages {
+        def task
+        stage ("Param Validation") {
+            steps {
+                script{
+                    echo "Env Choice   : ${params.Env}"
+                    echo "Suite Choice : ${params.Suite}"
+                    if (params.Env.equals("Env not recognized") || params.Suite.equals("Suite not recognized")) {
+                      echo "Validation Failure"
+                      currentBuild.result = 'ABORTED'
+                      return
+                    }
+                    task = ${params.Env}=="QA"?"testOnQa":"testOnStage"
+                    echo "Param Validation Successful"
+                }
+            }
+        }
+
+        stage ("Running ${params.Suite} on ${params.Env}") {
+            steps {
+                script{
+                    sh "./gradlew clean ${task} -PsuiteNature=${params.Suite}"
+                }
+            }
+        }
+
+        stage ("Posting Results") {
+            steps {
+                junit 'build/test-results/${task}/*.xml'
+            }
+        }
+    }
+
+}
