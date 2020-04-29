@@ -50,15 +50,10 @@ properties([
 ])
 
 pipeline {
-    environment {
-
-    }
-
     agent any
 
     stages {
-        def task
-        stage ("Param Validation") {
+        stage ('Param Validation') {
             steps {
                 script{
                     echo "Env Choice   : ${params.Env}"
@@ -68,21 +63,21 @@ pipeline {
                       currentBuild.result = 'ABORTED'
                       return
                     }
-                    task = ${params.Env}=="QA"?"testOnQa":"testOnStage"
                     echo "Param Validation Successful"
                 }
             }
         }
 
-        stage ("Running ${params.Suite} on ${params.Env}") {
+        stage ('Running ${params.Suite} on ${params.Env}') {
             steps {
+                def task = ${params.Env}=="QA"?"testOnQa":"testOnStage"
                 script{
                     sh "./gradlew clean ${task} -PsuiteNature=${params.Suite}"
                 }
             }
         }
 
-        stage ("Posting Results") {
+        stage ('Posting Results') {
             steps {
                 junit 'build/test-results/${task}/*.xml'
             }
