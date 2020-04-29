@@ -81,7 +81,7 @@ pipeline {
 
         stage ('Posting Results') {
             steps {
-                junit 'build/test-results/${task}/*.xml'
+                junit "build/test-results/${task}/*.xml"
             }
         }
     }
