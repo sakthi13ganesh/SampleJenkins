@@ -60,7 +60,7 @@ pipeline {
                 script{
                     echo "Env Choice   : ${Env}"
                     echo "Suite Choice : ${Suite}"
-                    if (Env.equals("Env not recognized") || Suite.equals("Suite not recognized")) {
+                    if (params.Env.equals("Env not recognized") || Suite.equals("Suite not recognized")) {
                       echo "Validation Failure"
                       currentBuild.result = 'ABORTED'
                       return
@@ -73,7 +73,7 @@ pipeline {
         stage ('Running Test suite') {
             steps {
                 script{
-                    task = ${Env}=="QA"?"testOnQa":"testOnStage"
+                    task = params.Env.equals("QA")?"testOnQa":"testOnStage"
                     sh "./gradlew clean ${task} -PsuiteNature=${Suite}"
                 }
             }
