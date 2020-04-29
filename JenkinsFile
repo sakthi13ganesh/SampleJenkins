@@ -1,5 +1,56 @@
 def task
 
+properties([
+    parameters([
+        [$class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Select the Env Name from the Dropdown List',
+            filterLength: 1,
+            filterable: true,
+            name: 'Env',
+            randomName: 'choice-parameter-5631314439613978',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        'return[\'Env not recognized\']'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        'return["QA","Stage"]'
+                ]
+            ]
+        ],
+        [$class: 'ChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Select the Suite to test from the Dropdown List',
+            filterLength: 1,
+            filterable: true,
+            name: 'Suite',
+            randomName: 'choice-parameter-5631314456178619',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        'return[\'Suite not recognized\']'
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        'return["regression","smoke"]'
+                ]
+            ]
+        ]
+    ])
+])
+
 pipeline {
     agent any
 
