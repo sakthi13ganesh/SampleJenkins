@@ -1,3 +1,5 @@
+def task
+
 properties([
     parameters([
         [$class: 'ChoiceParameter',
@@ -70,8 +72,8 @@ pipeline {
 
         stage ('Running ${params.Suite} on ${params.Env}') {
             steps {
-                def task = ${params.Env}=="QA"?"testOnQa":"testOnStage"
                 script{
+                    task = ${params.Env}=="QA"?"testOnQa":"testOnStage"
                     sh "./gradlew clean ${task} -PsuiteNature=${params.Suite}"
                 }
             }
