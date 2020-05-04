@@ -28,10 +28,7 @@ pipelineJob('SuiteRunner'){
     definition {
         cpsScm {
             scm {
-                git{
-                    branch("master")
-                    url("https://github.com/jenkinsci/job-dsl-plugin.git")
-                }
+                git('https://github.com/jenkinsci/job-dsl-plugin.git','master')
             }
         }
     }
