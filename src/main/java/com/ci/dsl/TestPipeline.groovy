@@ -3,7 +3,7 @@ package com.ci.dsl
 def task
 
 pipelineJob('SuiteRunner'){
-    
+
     parameters {
         activeChoiceParam('Env') {
             description('Select the Env Name from the Dropdown List')
@@ -30,7 +30,6 @@ pipelineJob('SuiteRunner'){
             scm {
                 git{
                     branch('master')
-                    name('origin')
                     url('https://github.com/jenkinsci/job-dsl-plugin.git')
                 }
             }
