@@ -9,16 +9,16 @@ job('SuiteRunner'){
             description('Select the Env Name from the Dropdown List')
             choiceType('SINGLE_SELECT')
             groovyScript {
-                script('[\'QA\', \'Stage\']')
-                fallbackScript('[\'Env not recognized\']')
+                script('return[\'QA\', \'Stage\']')
+                fallbackScript('return[\'Env not recognized\']')
             }
         }
         activeChoiceParam('Suite') {
             description('Select the Suite to test from the Dropdown List')
             choiceType('SINGLE_SELECT')
             groovyScript {
-                script('[\'regression\', \'smoke\']')
-                fallbackScript('[\'Suite not recognized\']')
+                script('return[\'regression\', \'smoke\']')
+                fallbackScript('return[\'Suite not recognized\']')
             }
         }
     }
