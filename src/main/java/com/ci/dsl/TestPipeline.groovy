@@ -24,7 +24,7 @@ job('SuiteRunner'){
     }
 
     scm {
-        git('https://github.com/jenkinsci/job-dsl-plugin.git','master')
+        git('https://github.com/sakthi13ganesh/SampleJenkins.git','master')
     }
 
     steps{
